@@ -1,11 +1,26 @@
-const express = require('express')
+const express = require("express");
 
+const Hotel = require('../models/hotel')
+const router = express.Router();
 
-const router = express.Router()
+// CREATE
 
-router.get("/" , (req,res) => {
-    res.json({message : "Auth EndPoint Please Provide Token "})
-})
+router.post("/", async (req, res) => {
+  const newHotel = new Hotel(req.body);
 
+  try {
+    const saveHotel = await newHotel.save();
+    res.status(200).json(saveHotel);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
-module.exports = router ;
+// UPDATE
+
+// DELETE
+
+// GET
+// GET All
+
+module.exports = router;

@@ -22,15 +22,15 @@ app.get('/', (req, res) => {
 })
 
 // middlewares are here 
-
-app.use("/auth",require("./routes/auth"));
-app.use("/users",require("./routes/users"));
-app.use("/rooms",require("./routes/rooms"));
-app.use("/hotels",require("./routes/hotels"));
+app.use(express.json());
+app.use("/api/auth",require("./routes/auth"));
+app.use("/api/users",require("./routes/users"));
+app.use("/api/rooms",require("./routes/rooms"));
+app.use("/api/hotels",require("./routes/hotels"));
 
 
 const PORT = process.env.PORT || 5001 
 
 app.listen(PORT, () => {
   console.log(` eLiteStay Backend listening on port ${PORT}`)
-})
+});
