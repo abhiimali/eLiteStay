@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 // middlewares are here 
 app.use(express.json());
 app.use("/api/auth",require("./routes/auth"));
-app.use("/api/users",require("./routes/users"));
+// app.use("/api/users",require("./routes/users"));
 app.use("/api/rooms",require("./routes/rooms"));
 app.use("/api/hotels",require("./routes/hotels"));
 
