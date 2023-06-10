@@ -18,7 +18,7 @@ mongoose.connect(process.env.DB_URL, {
 
 
 app.get('/', (req, res) => {
-  res.json({message: "Backend Working As Expected "})
+  res.json({message: "Backend Working Fine updated  "})
 })
 
 // middlewares are here 
@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
 
 
 const PORT = process.env.PORT || 5001 
-
-app.listen(PORT, () => {
+const HOST =  '0.0.0.0' 
+app.listen(PORT,HOST ,() => {
   console.log(` eLiteStay Backend listening on port ${PORT}`)
 });

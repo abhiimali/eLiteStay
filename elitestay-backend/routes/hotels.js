@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Hotel = require("../models/hotel");
+const Hotel = require("../models/Hotel");
 const e = require("express");
 const { error } = require("console");
 const router = express.Router();

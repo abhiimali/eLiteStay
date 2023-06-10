@@ -36,7 +36,7 @@ const login = async (req, res, next) => {
       return next(createError(400, " Incorrect Password "));
     
     token = jwt.sign({id:user._id,isAdmin :user.isAdmin},process.env.SECRET_KEY);
-    console.log(token)
+    // console.log(token)
     const { password, isAdmin, ...otherDetails } = user._doc;
     const userDetails = { ...otherDetails };
     res.cookie("access_token", token, {
@@ -46,4 +46,5 @@ const login = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = { register, login };
