@@ -1,50 +1,56 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-const { createError } = require("../utils/error");
-// import { createError } from "../utils/error.js";
+const User =  require("../models/User.js");
 
-const register = async (req, res, next) => {
+
+ const updateUser = async (req,res,next) => {
   try {
-    const salt = bcrypt.genSaltSync(10);
-    const hashpass = bcrypt.hashSync(req.body.password, salt);
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashpass,
-    });
-
-    await newUser.save();
-    res.status(200).json({ message: " User Created Successfully " });
-  } catch (err) {
-    next(err);
-  }
-};
-
-const login = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ username: req.body.username });
-    if (!user) return next(createError(404, " User Does Not Found"));
-    // console.log(user);
-
-    const isPasswordCorrect = await bcrypt.compare(
-      req.body.password,
-      user.password
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
     );
-    if (!isPasswordCorrect)
-      return next(createError(400, " Incorrect Password "));
-    
-    token = jwt.sign({id:user._id,isAdmin :user.isAdmin},process.env.SECRET_KEY);
-    // console.log(token)
-    const { password, isAdmin, ...otherDetails } = user._doc;
-    const userDetails = { ...otherDetails };
-    res.cookie("access_token", token, {
-      httpOnly: true,
-    }).status(200).json(userDetails)
+    res.status(200).json(updatedUser);
   } catch (err) {
     next(err);
   }
-};
+}
+ const deleteUser = async (req,res,next)=>{
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User has been deleted.");
+  } catch (err) {
+    next(err);
+  }
+}
+ const getUser = async (req,res,next)=>{
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+}
+ const getUsers = async (req,res,next)=>{
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+}
 
-module.exports = { register, login };
+module.exports = {  
+  updateUser,
+  deleteUser,
+  getUser,
+  getUsers
+
+ }
+
+
+ module.exports = {
+  updateUser,
+  deleteUser,
+  getUser,
+  getUsers,
+  
+ }

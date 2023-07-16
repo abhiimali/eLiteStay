@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 app.use(express.json());
 app.use(cookieParser())
 app.use("/api/auth",require("./routes/auth"));
-// app.use("/api/users",require("./routes/users"));
+app.use("/api/users",require("./routes/users"));
 app.use("/api/rooms",require("./routes/rooms"));
 app.use("/api/hotels",require("./routes/hotels"));
 

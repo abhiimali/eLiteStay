@@ -1,11 +1,30 @@
 const express = require('express')
 
+const  {
+  createRoom,
+  deleteRoom,
+  getRoom,
+  getRooms,
+  updateRoom,
+  updateRoomAvailability,
+} = require("../controllers/roomController.js");
 
-const router = express.Router()
+const { verifyAdmin } =  require("../utils/verifyToken.js");
 
-router.get("/" , (req,res) => {
-    res.json({message : "Auth EndPoint Please Provide Token "})
-})
+const router = express.Router();
+//CREATE
+router.post("/:hotelid", verifyAdmin, createRoom);
 
+//UPDATE
+router.put("/availability/:id", updateRoomAvailability);
+router.put("/:id", verifyAdmin, updateRoom);
+//DELETE
+router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
+//GET
 
-module.exports = router ;
+router.get("/:id", getRoom);
+//GET ALL
+
+router.get("/", getRooms);
+
+module.exports = router;
